@@ -894,7 +894,7 @@ const controller = {
 
         const metadata = {
             "title": 'Power Nap',
-            "subtitle": 'By, ' + title.toLowerCase()
+            "subtitle": 'By ' + title.toLowerCase()
                 .split(' ')
                 .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
                 .join(' '),
@@ -969,7 +969,7 @@ const controller = {
 
         const metadata = {
             "title": 'Power Nap',
-            "subtitle": 'By, ' + title.toLowerCase()
+            "subtitle": 'By ' + title.toLowerCase()
                 .split(' ')
                 .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
                 .join(' '),
