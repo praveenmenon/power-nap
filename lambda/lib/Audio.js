@@ -3,7 +3,7 @@ const PowerNapSkillConfig = require('../skillconfig.json');
 
 module.exports.skill = {
     appId: PowerNapSkillConfig.appId,
-    dynamoDBTableName: PowerNapSkillConfig.table_name,
+    dynamoDBTableName: "power-nap-production",
 };
 
 module.exports.audioData = {
