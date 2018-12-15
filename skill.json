@@ -1,0 +1,40 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "Sample Short Description",
+          "examplePhrases": [
+            "Alexa open power nap",
+            "Alexa tell power nap",
+            "Alexa ask power nap"
+          ],
+          "name": "Power Nap",
+          "description": "Sample Full Description",
+          "smallIconUri": "https://s3.amazonaws.com/power-nap-prod/GUI/skill-icons/MS_Alexa_Skill_PowerNap_Small.png",
+          "largeIconUri": "https://s3.amazonaws.com/power-nap-prod/GUI/skill-icons/MS_Alexa_Skill_PowerNap_Large.png"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Sample Testing Instructions.",
+      "category": "STREAMING_SERVICE",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sourceDir": "lambda"
+        },
+        "interfaces": [
+          {
+            "type": "AUDIO_PLAYER"
+          },
+          {
+            "type": "RENDER_TEMPLATE"
+          }
+        ]
+      }
+    },
+    "manifestVersion": "1.0"
+  }
+}
