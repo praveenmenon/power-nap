@@ -12,7 +12,6 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     async handle(handlerInput) {
-
         const playbackInfo = await getPlaybackInfo(handlerInput);
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         console.log('launch request attributes:', attributes);
@@ -26,11 +25,13 @@ const LaunchRequestHandler = {
             playbackInfo.visitCount++;
 
             // Prompt Text
+            const WelcomePrompt = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/FullWelcomeMessagePN.mp3\"/>';
+            const  errorPrompt = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/ErrorMessagePN.mp3\"/>';
             promptOne = RandomModule.launch[Math.floor(Math.random() * RandomModule.launch.length)];
             promptTwo = RandomModule.launchEnd[Math.floor(Math.random() * RandomModule.launchEnd.length)];
-            prompt = `Welcome to Power Nap! ${promptOne} ${promptTwo}`;
+            prompt = `${WelcomePrompt} ${promptOne} ${promptTwo}`;
             // Re-Prompt Text
-            reprompt = `I didn\'t catch that. ${promptTwo}`;
+            reprompt = `${errorPrompt}`;
 
             // setting sessions and repeat option
             attributes.cancelSession = 'cancel_true';
@@ -48,15 +49,16 @@ const LaunchRequestHandler = {
             }
 
             return handlerInput.responseBuilder
-                .speak(prompt)
-                .reprompt(reprompt)
-                .withShouldEndSession(false)
-                .getResponse();
-
+            .speak(prompt)
+            .reprompt(reprompt)
+            .withShouldEndSession(false)
+            .getResponse();
         } else if (!playbackInfo.hasPreviousPlaybackSession && playbackInfo.visitCount > 0) {
             console.log("No previous session");
 
             playbackInfo.visitCount++;
+            const welcomeBack = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/WelcomeBackPN.mp3\"/>';
+            const milestoneEnd = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/MilestoneMessagePN-A_2.mp3\"/>';
 
             switch (playbackInfo.visitCount) {
                 case 5:
@@ -65,25 +67,29 @@ const LaunchRequestHandler = {
                 case 20:
                 case 25:
                 case 30:
-
-                    prompt = 'Welcome back to Power Nap! You\'ve taken quite a few mid day snoozes! Way to go you! Would you like to fall asleep to a meditation by Faith Hunter or Franko Heke?';
-                    break;
+                const midDaySnooze = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/MilestoneMessagePN-A.mp3\"/>';
+                const wayToGo = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/MilestoneMessagePN-A_1.mp3\"/>';
+                prompt = welcomeBack + midDaySnooze + wayToGo + milestoneEnd;
+                break;
 
                 default:
-                    random = RandomModule.subsequentLaunch[Math.floor(Math.random() * RandomModule.subsequentLaunch.length)];
-                    promptTwo = RandomModule.launchEnd[Math.floor(Math.random() * RandomModule.launchEnd.length)];
-                    prompt = `Welcome back to Power Nap! ${random} ${promptTwo}`;
+
+                random = RandomModule.subsequentLaunch[Math.floor(Math.random() * RandomModule.subsequentLaunch.length)];
+                promptTwo = RandomModule.launchEnd[Math.floor(Math.random() * RandomModule.launchEnd.length)];
+                prompt = welcomeBack + random + promptTwo;
             }
 
             if (playbackInfo.listenCount == 10) {
-                prompt = `Welcome back to Power Nap! You\'re a super snoozer! `;
+                const superSnoozer = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/MilestoneMessagePN-B.mp3\"/>';
+                prompt = welcomeBack + superSnoozer;
             } else if ((playbackInfo.listenCount != 0) && (playbackInfo.listenCount % 25) == 0) {
                 random = RandomModule.greetings[Math.floor(Math.random() * RandomModule.greetings.length)];
-                prompt = `${random} Welcome back to rise and shine! You\'re a morning meditation master! Would you like to listen to a meditation by Faith Hunter or Franko Heke?`;
+                prompt = `${random} ${welcomeBack} You\'re a morning meditation master! ${milestoneEnd}`;
             }
 
             // generic re-prompt
-            reprompt = 'I didn\'t catch that. Would you like to listen to a meditation by Faith Hunter or Franko Heke?';
+
+            reprompt = errorPrompt;
 
             // check if display is supported
             if (supportsDisplay(handlerInput)) {
@@ -104,13 +110,13 @@ const LaunchRequestHandler = {
             handlerInput.attributesManager.setSessionAttributes(attributes);
 
             return handlerInput.responseBuilder
-                .speak(prompt)
-                .reprompt(reprompt)
-                .withShouldEndSession(false)
-                .getResponse();
+            .speak(prompt)
+            .reprompt(reprompt)
+            .withShouldEndSession(false)
+            .getResponse();
         } else {
             console.log("session already exist");
-
+            const welcomeBack = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/WelcomeBackPN.mp3\"/>';
             switch (playbackInfo.visitCount) {
                 case 5:
                 case 10:
@@ -118,16 +124,16 @@ const LaunchRequestHandler = {
                 case 20:
                 case 25:
                 case 30:
-                    end = RandomModule.resumeOptions[Math.floor(Math.random() * RandomModule.resumeOptions.length)];
-                    prompt = 'Welcome back to Power Nap! You\'ve taken quite a few mid day snoozes! You were listening to ' + constants.audioData[playbackInfo.index.toString()].tagline + end;
-                    break;
+                end = RandomModule.resumeOptions[Math.floor(Math.random() * RandomModule.resumeOptions.length)];
+                prompt = welcomeBack + ' You\'ve taken quite a few mid day snoozes!' + constants.audioData[playbackInfo.index.toString()].taglineVoiceoverResume + end;
+                break;
 
                 default:
-                    end = RandomModule.resumeOptions[Math.floor(Math.random() * RandomModule.resumeOptions.length)];
-                    prompt = 'Welcome back to Power Nap! You were listening to ' + constants.audioData[playbackInfo.index.toString()].tagline + end;
+                end = RandomModule.resumeOptions[Math.floor(Math.random() * RandomModule.resumeOptions.length)];
+                prompt = welcomeBack + constants.audioData[playbackInfo.index.toString()].taglineVoiceoverResume + end;
             }
 
-            reprompt = 'I didn\'t catch that. Would you like to listen to a meditation by Faith Hunter or Franko Heke?';
+            reprompt = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/ErrorMessagePN.mp3\"/>';
 
             console.log("prompt:", prompt);
             console.log("reprompt:", reprompt);
@@ -150,11 +156,12 @@ const LaunchRequestHandler = {
             attributes.repeatResponse = prompt;
 
             return handlerInput.responseBuilder
-                .speak(prompt)
-                .reprompt(reprompt)
-                .withShouldEndSession(false)
-                .getResponse();
+            .speak(prompt)
+            .reprompt(reprompt)
+            .withShouldEndSession(false)
+            .getResponse();
         }
+
     },
 };
 
@@ -230,7 +237,7 @@ const AudioPlayerEventHandler = {
 const CheckAudioInterfaceHandler = {
     async canHandle(handlerInput) {
         const audioPlayerInterface = ((((handlerInput.requestEnvelope.context || {}).System || {}).device || {}).supportedInterfaces || {}).AudioPlayer;
-        return audioPlayerInterface === undefined
+        return audioPlayerInterface === undefined;
     },
     handle(handlerInput) {
         return handlerInput.responseBuilder
@@ -296,7 +303,7 @@ const meditationIntent = {
 
                 return controller.play(handlerInput, prompt, audioName);
             } else {
-                prompt = reprompt = 'I didn\'t catch that. Would you like to listen to a meditation by Faith Hunter or Franko Heke?';
+                prompt = reprompt = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/ErrorMessagePN.mp3\"/>';
 
                 attributes.wrongMeditationCount = true;
                 attributes.repeatResponse = prompt;
@@ -391,8 +398,11 @@ const LoopOnHandler = {
 
         playbackSetting.loop = true;
 
+        let start = RandomModule.stop[Math.floor(Math.random() * RandomModule.stop.length)];
+        const loopPrompt = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/LoopingPN.mp3\"/>';
+
         return handlerInput.responseBuilder
-            .speak('Loop turned on.')
+            .speak(start + loopPrompt)
             .getResponse();
     },
 };
@@ -411,8 +421,11 @@ const LoopOffHandler = {
 
         playbackSetting.loop = false;
 
+        let start = RandomModule.stop[Math.floor(Math.random() * RandomModule.stop.length)];
+        const loopPrompt = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/StopLoopingPN.mp3\"/>'
+
         return handlerInput.responseBuilder
-            .speak('Loop turned off.')
+            .speak(start + loopPrompt)
             .getResponse();
     },
 };
@@ -550,7 +563,7 @@ const YesHandler = {
 
             if (attributes.yesIntentPromptAgain) {
                 meditationID = constants.freeMeditations[Math.floor(Math.random() * constants.freeMeditations.length)];
-                prompt = 'I couldn\'t find that meditation, but I think you will like this one.';
+                prompt = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/FallbackIntentPN.mp3\"/>'
                 audioName = constants.audioData[meditationID.toString()].cardTitle;
 
                 attributes.yesIntentPromptAgain = false;
@@ -559,7 +572,7 @@ const YesHandler = {
 
                 return controller.play(handlerInput, prompt, audioName);
             } else {
-                prompt = reprompt = 'I didn\'t catch that. Would you like to listen to a meditation by Faith Hunter or Franko Heke?';
+                prompt = reprompt = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/ErrorMessagePN.mp3\"/>';
 
                 attributes.yesIntentPromptAgain = true;
                 attributes.repeatResponse = prompt;
@@ -629,7 +642,7 @@ const NoHandler = {
                     .withShouldEndSession(true)
                     .getResponse();
             } else {
-                prompt = reprompt = 'I didn\'t catch that. Would you like to listen to a meditation by Faith Hunter or Franko Heke?';
+                prompt = reprompt = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/ErrorMessagePN.mp3\"/>';
 
                 attributes.noIntentPromptAgain = true;
                 attributes.repeatResponse = prompt;
@@ -677,9 +690,10 @@ const HelpHandler = {
     async handle(handlerInput) {
         const attributes = handlerInput.attributesManager.getSessionAttributes();
         let prompt, reprompt;
-
-
-        prompt = reprompt = `you're listening to power nap. I have two meditations you can choose from. One is six minutes and one is nine minutes. You can pause, resume, shuffle, start over and play the next or previous one at any time. You can listen to a guided sleep meditation by Faith hunter or Franko heke. Who would you like to hear today?`;
+        const helpBegining = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/ErrorMessagePN.mp3\"/>';
+        const helpMiddle = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/HelpPN_2.mp3\"/>'
+        const helpLast = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/HelpPN_3.mp3\"/>'
+        prompt = reprompt = helpBegining + helpMiddle + helpLast;
 
         attributes.repeatResponse = prompt;
         attributes.responseTemplateSatue = false;
@@ -869,7 +883,7 @@ const controller = {
         playbackInfo.meditationType = podcast.type;
 
         if (message === '') {
-            const response = podcast.tagline;
+            const response = podcast.taglineVoiceover;
             const first = RandomModule.meditationStarts[Math.floor(Math.random() * RandomModule.meditationStarts.length)];
             const end = RandomModule.meditationLast[Math.floor(Math.random() * RandomModule.meditationLast.length)];
             message = start + response + first + end + ' <break time=\"3.00s\"/>';
@@ -952,7 +966,8 @@ const controller = {
         playbackInfo.meditationType = podcast.type;
 
         let end = RandomModule.meditationLast[Math.floor(Math.random() * RandomModule.meditationLast.length)];
-        let message = `Resuming ${podcast.tagline} ${end} <break time=\"2.00s\"/>`;
+        const resuming = '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/Resuming.mp3\"/>'
+        let message = `${resuming} ${podcast.taglineVoiceover} ${end} <break time=\"2.00s\"/>`;
 
         console.log('message outside:', message);
         console.log('playbackInfo inside play controller:', JSON.stringify(playbackInfo));

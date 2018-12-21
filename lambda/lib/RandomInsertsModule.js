@@ -1,84 +1,69 @@
 module.exports.launch = [
-    ' it\'s time to relax and recharge.',
-    ' it\'s time to recharge those batteries!',
-    ' it\'s time to rest easy.',
-    ' it\'s time to start a brand new day.',
-    ' it\'s time for a mid day snooze!'
+'<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/FullWelcomeMessagePN_1.mp3\"/>',
+'<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/FullWelcomeMessagePN_2.mp3\"/>',
+'<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/FullWelcomeMessagePN_3.mp3\"/>',
+'<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/FullWelcomeMessagePN_4.mp3\"/>'
 ];
 
 module.exports.launchEnd = [
-    ' do you want to listen to a guided meditation by Faith hunter or Franko Heke?',
-    ' would you like to listen to a guided meditation by Faith hunter or Franko Heke?'
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/FullWelcomeMessagePN_5.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/WelcomeBackPN_5.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/ResumeMessagePN_5.mp3\"/>'
 ];
 
 module.exports.subsequentLaunch = [
-    ' it\'s time to take another catnap!',
-    ' it\'s time to recharge!',
-    ' it\'s time to catch a few z\'s.',
-    ' it\'s time to take a quick snooze!'
+'<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/WelcomeBackPN_1.mp3\"/>',
+'<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/WelcomeBackPN_2.mp3\"/>',
+'<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/WelcomeBackPN_3.mp3\"/>',
+'<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/WelcomeBackPN_4.mp3\"/>'
 ];
 
 module.exports.resumeOptions = [
-    ' do you want to keep listening?',
-    ' Do you want to finish it?'
+ '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/ResumeMessagePN_2.mp3\"/>'
 ];
 
 module.exports.stop = [
-    'okay',
-    'got it',
-    'sure thing',
-    'no problem',
-    'got it',
-    'will do'
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/OK.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/GotIt.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/SureThing.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/NoProblem.mp3\"/>'
 ];
 
 module.exports.stopLast = [
-    'positive',
-    'wonderful',
-    'amazing',
-    'relaxed',
-    'peaceful'
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/PeacefulDay.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/PositiveDay.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/WonderfulDay.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/RelaxedDay.mp3\"/>',
 ];
 
 module.exports.startOver = [
-    'starting ',
-    'kicking off ',
-    'launching ',
-    'opening '
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/Launching.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/Starting.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/KickingOff.mp3\"/>'
 ];
 
 module.exports.repeat = [
-    'repeating ',
-    'launching ',
-    'starting '
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/Launching.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/Starting.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/KickingOff.mp3\"/>'
 ];
 
 module.exports.meditationFirst = [
-    'now playing ',
-    'kicking off ',
-    'starting ',
-    'launching '
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/Launching.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/Starting.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/KickingOff.mp3\"/>'
 ];
 
 module.exports.meditationStarts = [
-    ' go ahead and put your feet up.',
-    ' put your feet up, settle in, and close your eyes.',
-    ' lay back, relax and close your eyes.'
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/PrePlayMessagePN_3.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/PrePlayMessagePN_4.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/PrePlayMessagePN_5.mp3\"/>'
 ];
 
 module.exports.meditationLast = [
-    ' we\'ll get started soon',
-    ' we\'ll start your meditation shortly',
-    ' we\'ll get started shortly',
-    ' we\'ll get started right away'
-];
-
-module.exports.error = [
-    'Whoops,',
-    'Oopsies,',
-    'Yikes,',
-    'Oops-a-daisy,',
-    'Uh-oh,'
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/PrePlayMessagePN_6.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/PrePlayMessagePN_7.mp3\"/>',
+    '<audio src=\"https://s3.amazonaws.com/power-nap-audio/voiceover/PrePlayMessagePN_8.mp3\"/>'
 ];
 
 module.exports.displayListTemplateHint = [
@@ -97,11 +82,4 @@ module.exports.displayBodyTemplateHint = [
     "start over.",
     "play next.",
     "play previous"
-];
-
-module.exports.helpEnd = [
-    'Which one do you want to try?',
-    'Which one do you want to listen to today?',
-    'Which one do you want to play?',
-    'Which one do you want to hear?'
 ];
